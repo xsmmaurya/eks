@@ -5,6 +5,5 @@ srotas/argocd/repo-credentials.yaml
 **/argocd/*secret.yaml
 **/*.key
 **/*.pem
-**/secrets/
 
 srotas/.secrets/*.yaml
