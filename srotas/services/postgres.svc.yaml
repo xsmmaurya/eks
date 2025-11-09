@@ -1,8 +1,13 @@
+# /Users/xsm/Documents/workspace/AWS/eks/projects/srotas/services/postgres.svc.yaml
 apiVersion: v1
 kind: Service
 metadata:
   name: postgres
   namespace: apps
+  labels:
+    app: postgres
+    service: db
+    owner: xsm
 spec:
   type: ClusterIP
   selector:
@@ -10,3 +15,18 @@ spec:
   ports:
   - port: 5432
     targetPort: 5432
+
+
+---
+
+apiVersion: v1
+kind: Endpoints
+metadata:
+  name: postgres
+  namespace: apps
+subsets:
+  - addresses:
+      - ip: 192.168.65.254
+    ports:
+      - name: tcp
+        port: 5432

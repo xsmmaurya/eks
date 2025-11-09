@@ -6,6 +6,8 @@ metadata:
   labels:
     app: srotas-ms-mcp
     app.kubernetes.io/part-of: srotas
+    service: mcp
+    owner: xsm
 spec:
   type: ClusterIP
   selector: {app: srotas-ms-mcp}

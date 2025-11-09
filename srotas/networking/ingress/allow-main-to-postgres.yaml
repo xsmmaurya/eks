@@ -1,0 +1,17 @@
+# allow-main-to-postgres.yaml
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+  name: allow-main-to-postgres
+  namespace: apps
+spec:
+  selector:
+    matchLabels:
+      app: postgres         # <-- ensure your Postgres Deployment/Pod has app: postgres
+  rules:
+    - from:
+        - source:
+            principals: ["cluster.local/ns/apps/sa/srotas-main-sa"]
+      to:
+        - operation:
+            ports: ["5432"]

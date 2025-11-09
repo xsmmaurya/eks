@@ -6,6 +6,8 @@ metadata:
   labels: 
     app: srotas-main
     app.kubernetes.io/part-of: srotas
+    service: main
+    owner: xsm
 spec:
   type: ClusterIP
   selector: {app: srotas-main}
