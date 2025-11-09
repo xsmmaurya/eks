@@ -5,7 +5,7 @@ metadata:
   namespace: apps
 subjects:
   - kind: ServiceAccount
-    name: sa-srotas-fe
+    name: srotas-fe-sa
     namespace: apps
 roleRef:
   apiGroup: rbac.authorization.k8s.io
