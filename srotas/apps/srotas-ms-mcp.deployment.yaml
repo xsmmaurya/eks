@@ -18,7 +18,7 @@ spec:
         tier: backend
         metrics: "true"
     spec:
-      serviceAccountName: sa-srotas-ms-mcp
+      serviceAccountName: srotas-ms-mcp-sa
       containers:
         - name: srotas-ms-mcp
           image: xsmmaurya/srotas-ms-mcp:0.1.0

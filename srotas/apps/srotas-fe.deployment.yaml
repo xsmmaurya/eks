@@ -18,7 +18,7 @@ spec:
         tier: fe
         metrics: "true"
     spec:
-      serviceAccountName: sa-srotas-fe
+      serviceAccountName: srotas-fe-sa
       containers:
         - name: srotas-fe
           image: xsmmaurya/srotas-fe:0.1.0

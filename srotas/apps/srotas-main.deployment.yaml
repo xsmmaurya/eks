@@ -18,7 +18,7 @@ spec:
         tier: api
         metrics: "true"
     spec:
-      serviceAccountName: sa-srotas-main
+      serviceAccountName: srotas-main-sa
       containers:
         - name: srotas-main
           image: xsmmaurya/srotas-main:0.1.0
