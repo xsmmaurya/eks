@@ -1,0 +1,55 @@
+# srotas/policy/kyverno/overrides/keda-overrides.yaml
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: disallow-latest-tag
+spec:
+  validationFailureActionOverrides:
+    - action: Audit
+      namespaces: ["keda"]
+---
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: readonly-rootfs
+spec:
+  validationFailureActionOverrides:
+    - action: Audit
+      namespaces: ["keda"]
+---
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: require-requests-limits
+spec:
+  validationFailureActionOverrides:
+    - action: Audit
+      namespaces: ["keda"]
+---
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: restrict-root-and-privilege
+spec:
+  validationFailureActionOverrides:
+    - action: Audit
+      namespaces: ["keda"]
+---
+# (Optional but future-proof): include these too so other infra installs aren’t blocked later.
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: disallow-hostpath
+spec:
+  validationFailureActionOverrides:
+    - action: Audit
+      namespaces: ["keda"]
+---
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: block-host-namespaces
+spec:
+  validationFailureActionOverrides:
+    - action: Audit
+      namespaces: ["keda"]

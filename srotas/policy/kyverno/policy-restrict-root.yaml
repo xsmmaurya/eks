@@ -1,0 +1,36 @@
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: restrict-root-and-privilege
+spec:
+  validationFailureAction: Enforce
+  background: true
+  rules:
+    - name: require-nonroot-no-priv-escalation
+      match:
+        any:
+          - resources:
+              kinds: ["Pod","Deployment","StatefulSet","DaemonSet","Job","CronJob"]
+      validate:
+        message: "Containers must run as non-root, drop ALL caps, disable privilege escalation, and set seccompProfile RuntimeDefault."
+        pattern:
+          spec:
+            securityContext:
+              seccompProfile:
+                type: "RuntimeDefault"
+            containers:
+              - securityContext:
+                  runAsNonRoot: true
+                  allowPrivilegeEscalation: false
+                  capabilities:
+                    drop: ["ALL"]
+                  seccompProfile:
+                    type: "RuntimeDefault"
+            =(initContainers):
+              - securityContext:
+                  runAsNonRoot: true
+                  allowPrivilegeEscalation: false
+                  capabilities:
+                    drop: ["ALL"]
+                  seccompProfile:
+                    type: "RuntimeDefault"

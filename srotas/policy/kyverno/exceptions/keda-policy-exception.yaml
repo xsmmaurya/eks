@@ -1,0 +1,21 @@
+# srotas/policy/kyverno/exceptions/keda-policy-exception.yaml
+apiVersion: kyverno.io/v2alpha1
+kind: PolicyException
+metadata:
+  name: allow-keda-namespace
+  namespace: keda
+spec:
+  match:
+    any:
+      - resources:
+          namespaces: ["keda"]
+          kinds: ["Deployment","ReplicaSet","Pod"]
+  exceptions:
+    - policyName: disallow-latest-tag
+      ruleNames: ["*"]
+    - policyName: readonly-rootfs
+      ruleNames: ["*"]
+    - policyName: require-requests-limits
+      ruleNames: ["*"]
+    - policyName: restrict-root-and-privilege
+      ruleNames: ["*"]

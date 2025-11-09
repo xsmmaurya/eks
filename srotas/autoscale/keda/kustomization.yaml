@@ -1,0 +1,6 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - secret-keda-redis.yaml
+  - triggerauth-redis.yaml
+  - scaledobject-ms-mcp-redis.yaml

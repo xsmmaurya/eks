@@ -5,3 +5,4 @@ metadata:
   labels:
     srotas.space/env: dev
     app.kubernetes.io/part-of: srotas
+    istio-injection: enabled
