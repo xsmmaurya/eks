@@ -6,8 +6,8 @@ metadata:
 spec:
   project: srotas
   source:
-    repoURL: <REPO_URL>
-    targetRevision: main           # change if needed
+    repoURL: git@github.com:xsmmaurya/eks.git
+    targetRevision: main
     path: srotas/apps
   destination:
     server: https://kubernetes.default.svc

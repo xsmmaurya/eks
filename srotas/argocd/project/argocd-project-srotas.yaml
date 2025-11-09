@@ -6,7 +6,7 @@ metadata:
 spec:
   description: Project for Srotas workloads (apps, networking, monitoring)
   sourceRepos:
-    - <REPO_URL>   # e.g. https://github.com/xsm-maurya/srotas.git
+    - git@github.com:xsmmaurya/eks.git
   destinations:
     - namespace: apps
       server: https://kubernetes.default.svc

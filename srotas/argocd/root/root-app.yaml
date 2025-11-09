@@ -1,22 +1,18 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: srotas-monitoring
+  name: srotas-root
   namespace: argocd
 spec:
   project: srotas
   source:
-    repoURL: git@github.com:xsmmaurya/eks.git
+    repoURL: git@github.com:xsmmaurya/eks.git     # adjust if needed
     targetRevision: main
-    path: srotas/monitoring
+    path: srotas/argocd/apps-of-apps               # folder that holds child app yamls
   destination:
     server: https://kubernetes.default.svc
-    namespace: monitoring
+    namespace: argocd
   syncPolicy:
     automated:
       prune: true
       selfHeal: true
-    syncOptions:
-      - CreateNamespace=true
-      - PruneLast=true
-      - ApplyOutOfSyncOnly=true

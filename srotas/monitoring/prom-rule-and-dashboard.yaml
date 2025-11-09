@@ -1,0 +1,43 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: srotas-demo-rules
+  namespace: monitoring
+  labels:
+    release: kube-prom-stack   # adjust if your helm release label differs
+spec:
+  groups:
+    - name: srotas.demo
+      rules:
+        - alert: AlwaysFiring
+          expr: vector(1)
+          for: 1m
+          labels:
+            severity: info
+          annotations:
+            summary: "Demo: Always firing"
+            description: "This is a demo alert to verify PrometheusRule wiring."
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: srotas-demo-dashboard
+  namespace: monitoring
+  labels:
+    grafana_dashboard: "1"     # picked up by grafana sidecar in kube-prometheus-stack
+data:
+  srotas-demo.json: |
+    {
+      "title": "Srotas Demo",
+      "time": { "from": "now-30m", "to": "now" },
+      "panels": [
+        {
+          "type": "stat",
+          "title": "Always 1",
+          "gridPos": {"x":0,"y":0,"w":8,"h":6},
+          "targets": [{ "expr": "vector(1)" }]
+        }
+      ],
+      "schemaVersion": 36,
+      "version": 1
+    }

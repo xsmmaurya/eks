@@ -6,12 +6,12 @@ metadata:
 spec:
   project: srotas
   source:
-    repoURL: <REPO_URL>
+    repoURL: git@github.com:xsmmaurya/eks.git
     targetRevision: main
     path: srotas/networking
   destination:
     server: https://kubernetes.default.svc
-    namespace: networking
+    namespace: apps
   syncPolicy:
     automated:
       prune: true
