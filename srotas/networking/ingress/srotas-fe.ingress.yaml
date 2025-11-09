@@ -1,0 +1,23 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: srotas-fe
+  namespace: apps
+  annotations:
+    cert-manager.io/cluster-issuer: mkcert-cluster-issuer
+spec:
+  ingressClassName: traefik
+  tls:
+  - hosts: [ "srotas.127.0.0.1.nip.io" ]
+    secretName: srotas-local-tls
+  rules:
+  - host: srotas.127.0.0.1.nip.io
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: srotas-fe
+            port:
+              number: 3000

@@ -1,0 +1,23 @@
+# Deny all INGRESS by default
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: default-deny-ingress
+  namespace: apps
+spec:
+  podSelector: {} # all pods in ns
+  policyTypes: ["Ingress"]
+
+
+---
+
+
+# Deny all EGRESS by default
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: default-deny-egress
+  namespace: apps
+spec:
+  podSelector: {} # all pods in ns
+  policyTypes: ["Egress"]

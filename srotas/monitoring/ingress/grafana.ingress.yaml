@@ -1,0 +1,24 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: grafana-ingress
+  namespace: monitoring
+  annotations:
+    kubernetes.io/ingress.class: traefik
+    cert-manager.io/cluster-issuer: mkcert-cluster-issuer
+spec:
+  tls:
+    - hosts:
+        - grafana.127.0.0.1.nip.io
+      secretName: grafana-cert
+  rules:
+    - host: grafana.127.0.0.1.nip.io
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: kube-prom-stack-grafana
+                port:
+                  number: 80

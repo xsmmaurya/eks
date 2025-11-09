@@ -1,0 +1,27 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: srotas
+  namespace: argocd
+spec:
+  description: Project for Srotas workloads (apps, networking, monitoring)
+  sourceRepos:
+    - git@github.com:xsmmaurya/eks.git   # change if you split repos later
+  destinations:
+    - namespace: apps
+      server: https://kubernetes.default.svc
+    - namespace: networking
+      server: https://kubernetes.default.svc
+    - namespace: monitoring
+      server: https://kubernetes.default.svc
+  # If you later manage ESO/sealed-secrets via Argo:
+  # - namespace: secrets
+  #   server: https://kubernetes.default.svc
+
+  # Allow cluster-scoped kinds (NetPol, CRDs, etc.)
+  clusterResourceWhitelist:
+    - group: '*'
+      kind: '*'
+
+  orphanedResources:
+    warn: true

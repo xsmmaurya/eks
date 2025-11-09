@@ -1,0 +1,10 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-monitoring-egress
+  namespace: monitoring
+spec:
+  podSelector: {}     # Prometheus, Loki, etc.
+  policyTypes: ["Egress"]
+  egress:
+    - {}              # allow all egress from monitoring namespace

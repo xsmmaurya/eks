@@ -1,0 +1,19 @@
+loki:
+  enabled: true
+  isDefault: true
+  persistence:
+    enabled: false   # flip to true with OpenEBS later
+  resources:
+    requests: { cpu: "100m", memory: "256Mi" }
+    limits:   { cpu: "500m", memory: "512Mi" }
+
+promtail:
+  enabled: true
+  resources:
+    requests: { cpu: "50m", memory: "128Mi" }
+    limits:   { cpu: "200m", memory: "256Mi" }
+  pipelineStages:
+    - cri: {}   # parse container logs automatically
+
+grafana:
+  enabled: false  # Grafana comes from kube-prometheus-stack

@@ -1,0 +1,14 @@
+# argocd-servers-transport.yaml
+apiVersion: traefik.io/v1alpha1
+kind: ServersTransport
+metadata:
+  name: argocd-https-internal
+  namespace: argocd
+spec:
+  # (A) simplest for local/dev: don't verify upstream cert chain
+  insecureSkipVerify: true
+
+  # (B) If you want strict verify instead, comment (A) and uncomment:
+  # serverName: argocd.127.0.0.1.nip.io
+  # rootCAsSecrets:
+  #   - name: mkcert-root-ca     # put the mkcert CA into a Secret in *argocd* ns

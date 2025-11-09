@@ -1,0 +1,22 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: srotas-apps
+  namespace: argocd
+spec:
+  project: srotas
+  source:
+    repoURL: <REPO_URL>
+    targetRevision: main           # change if needed
+    path: srotas/apps
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: apps
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - PruneLast=true
+      - ApplyOutOfSyncOnly=true

@@ -1,0 +1,19 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PodMonitor
+metadata:
+  name: srotas-main
+  namespace: monitoring
+  labels:
+    release: kube-prom-stack
+spec:
+  namespaceSelector:
+    matchNames: ["apps"]
+  selector:
+    matchLabels:
+      app: srotas-main
+      metrics: "true"
+  podMetricsEndpoints:
+    - port: metrics      # must match a named containerPort in the Pod
+      path: /metrics
+      interval: 30s
+      scrapeTimeout: 10s

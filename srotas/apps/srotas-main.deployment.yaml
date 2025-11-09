@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: srotas-main
+  namespace: apps
+  labels:
+    app: srotas-main
+    tier: api
+    app.kubernetes.io/part-of: srotas
+spec:
+  replicas: 2
+  selector:
+    matchLabels: {app: srotas-main}
+  template:
+    metadata:
+      labels:
+        app: srotas-main
+        tier: api
+        metrics: "true"
+    spec:
+      serviceAccountName: sa-srotas-main
+      containers:
+        - name: srotas-main
+          image: xsmmaurya/srotas-main:0.1.0
+          imagePullPolicy: Always
+          ports:
+            - name: http
+              containerPort: 8080
+            - name: metrics
+              containerPort: 9464
+          envFrom:
+            - secretRef: { name: srotas-main-secret }
+            - configMapRef: { name: srotas-main-config }
+          resources:
+            requests: {cpu: "100m", memory: "128Mi"}
+            limits: {cpu: "500m", memory: "512Mi"}
+          readinessProbe:
+            httpGet: {path: /api/v1/health, port: 8080}
+            initialDelaySeconds: 5
+          livenessProbe:
+            httpGet: {path: /api/v1/health, port: 8080}
+            initialDelaySeconds: 5

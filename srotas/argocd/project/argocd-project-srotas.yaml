@@ -1,0 +1,21 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: srotas
+  namespace: argocd
+spec:
+  description: Project for Srotas workloads (apps, networking, monitoring)
+  sourceRepos:
+    - <REPO_URL>   # e.g. https://github.com/xsm-maurya/srotas.git
+  destinations:
+    - namespace: apps
+      server: https://kubernetes.default.svc
+    - namespace: networking
+      server: https://kubernetes.default.svc
+    - namespace: monitoring
+      server: https://kubernetes.default.svc
+  clusterResourceWhitelist:
+    - group: '*'
+      kind: '*'
+  orphanedResources:
+    warn: true

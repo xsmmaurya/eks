@@ -1,0 +1,23 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: srotas-ms-mcp
+  namespace: apps
+  annotations:
+    cert-manager.io/cluster-issuer: mkcert-cluster-issuer
+spec:
+  ingressClassName: traefik
+  tls:
+  - hosts: [ "mcp.srotas.127.0.0.1.nip.io" ]
+    secretName: srotas-local-tls
+  rules:
+  - host: mcp.srotas.127.0.0.1.nip.io
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: srotas-ms-mcp
+            port:
+              number: 8081

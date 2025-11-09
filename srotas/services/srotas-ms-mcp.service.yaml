@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: srotas-ms-mcp
+  namespace: apps
+  labels:
+    app: srotas-ms-mcp
+    app.kubernetes.io/part-of: srotas
+spec:
+  type: ClusterIP
+  selector: {app: srotas-ms-mcp}
+  ports:
+    - name: http
+      port: 8081
+      targetPort: 8081

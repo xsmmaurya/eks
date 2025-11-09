@@ -1,0 +1,24 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: loki-ingress
+  namespace: monitoring
+  annotations:
+    kubernetes.io/ingress.class: traefik
+    cert-manager.io/cluster-issuer: mkcert-cluster-issuer
+    traefik.ingress.kubernetes.io/router.middlewares: monitoring-loki-redirect-root@kubernetescrd
+spec:
+  tls:
+    - hosts: [loki.127.0.0.1.nip.io]
+      secretName: loki-cert
+  rules:
+    - host: loki.127.0.0.1.nip.io
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: loki
+                port:
+                  number: 3100

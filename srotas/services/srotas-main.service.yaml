@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: srotas-main
+  namespace: apps
+  labels: 
+    app: srotas-main
+    app.kubernetes.io/part-of: srotas
+spec:
+  type: ClusterIP
+  selector: {app: srotas-main}
+  ports:
+    - name: http
+      port: 8080
+      targetPort: 8080

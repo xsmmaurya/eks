@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: srotas-fe
+  namespace: apps
+  labels:
+    app: srotas-fe
+    tier: fe
+    app.kubernetes.io/part-of: srotas
+spec:
+  replicas: 1
+  selector:
+    matchLabels: { app: srotas-fe }
+  template:
+    metadata:
+      labels:
+        app: srotas-fe
+        tier: fe
+        metrics: "true"
+    spec:
+      serviceAccountName: sa-srotas-fe
+      containers:
+        - name: srotas-fe
+          image: xsmmaurya/srotas-fe:0.1.0
+          imagePullPolicy: Always
+          ports:
+            - name: http
+              containerPort: 8080
+            - name: metrics
+              containerPort: 9464
+          envFrom:
+            - configMapRef: { name: srotas-fe-config }
+          resources:
+            requests: {cpu: "100m", memory: "128Mi"}
+            limits: {cpu: "500m", memory: "512Mi"}
+          readinessProbe:
+            httpGet: { path: /, port: 3000 }
+            initialDelaySeconds: 10
+          livenessProbe:
+            httpGet: { path: /, port: 3000 }
+            initialDelaySeconds: 20

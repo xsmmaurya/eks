@@ -1,0 +1,9 @@
+# /Users/xsm/Documents/workspace/AWS/eks/projects/srotas/networking/tls/cluster-issuer.yaml
+
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: mkcert-cluster-issuer
+spec:
+  ca:
+    secretName: mkcert-root-ca   # references your CA secret

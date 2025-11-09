@@ -1,0 +1,16 @@
+# /Users/xsm/Documents/workspace/AWS/eks/projects/srotas/networking/tls/certificate.yaml
+
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: srotas-local-tls
+  namespace: apps
+spec:
+  secretName: srotas-local-tls       # <— new secret that cert-manager will generate
+  issuerRef:
+    kind: ClusterIssuer
+    name: mkcert-cluster-issuer      # <— references the ClusterIssuer above
+  dnsNames:
+  - srotas.127.0.0.1.nip.io
+  - api.srotas.127.0.0.1.nip.io
+  - mcp.srotas.127.0.0.1.nip.io

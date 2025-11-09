@@ -1,0 +1,25 @@
+global:
+  domain: argocd.127.0.0.1.nip.io
+
+configs:
+  cm:
+    url: https://argocd.127.0.0.1.nip.io
+  params:
+    server.insecure: "false"   # HTTPS only
+
+server:
+  ingress:
+    enabled: true
+    ingressClassName: traefik
+    annotations:
+      cert-manager.io/cluster-issuer: mkcert-cluster-issuer
+      traefik.ingress.kubernetes.io/router.entrypoints: websecure
+      traefik.ingress.kubernetes.io/router.tls: "true"
+      traefik.ingress.kubernetes.io/service.serversscheme: https
+      traefik.ingress.kubernetes.io/service.serverstransport: argocd-argocd-https-internal@kubernetescrd
+    hosts:
+      - argocd.127.0.0.1.nip.io
+    tls:
+      - secretName: argocd-server-tls
+        hosts:
+          - argocd.127.0.0.1.nip.io

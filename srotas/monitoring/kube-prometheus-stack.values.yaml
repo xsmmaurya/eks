@@ -1,0 +1,39 @@
+# Keep it light for laptop
+grafana:
+  enabled: true
+  adminUser: admin
+  adminPassword: prom-operator
+  service:
+    type: ClusterIP
+  persistence:
+    enabled: false   # flip to true when Phase 2 (OpenEBS) is ready
+  defaultDashboardsEnabled: true
+
+prometheus:
+  service:
+    type: ClusterIP
+  prometheusSpec:
+    retention: 12h
+    resources:
+      requests: { cpu: "200m", memory: "512Mi" }
+      limits:   { cpu: "1",    memory: "1Gi" }
+    # Only scrape the cluster (no remoteWrite yet)
+    externalLabels:
+      cluster: "minikube"
+    scrapeInterval: 30s
+    evaluationInterval: 30s
+
+alertmanager:
+  enabled: true
+  alertmanagerSpec:
+    resources:
+      requests: { cpu: "50m", memory: "128Mi" }
+      limits:   { cpu: "200m", memory: "256Mi" }
+
+kube-state-metrics:
+  resources:
+    requests: { cpu: "50m", memory: "128Mi" }
+
+nodeExporter:
+  resources:
+    requests: { cpu: "25m", memory: "64Mi" }

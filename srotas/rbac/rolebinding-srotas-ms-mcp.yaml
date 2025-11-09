@@ -1,0 +1,13 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: srotas-ms-mcp-rb
+  namespace: apps
+subjects:
+  - kind: ServiceAccount
+    name: srotas-ms-mcp-sa
+    namespace: apps
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: srotas-ms-mcp-role
