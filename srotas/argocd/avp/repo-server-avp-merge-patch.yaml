@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: argocd-repo-server
+  namespace: argocd
+spec:
+  template:
+    spec:
+      volumes:
+        - name: custom-tools
+          emptyDir: {}
+        - name: avp-credentials
+          secret:
+            secretName: argocd-vault-credentials
+      initContainers:
+        - name: avp-download
+          image: alpine:3.20
+          command: ["/bin/sh","-c"]
+          args:
+            - >
+              set -euo pipefail;
+              AVP_VERSION="${AVP_VERSION:-1.18.1}";
+              wget -qO /custom-tools/argocd-vault-plugin
+              "https://github.com/argoproj-labs/argocd-vault-plugin/releases/download/v${AVP_VERSION}/argocd-vault-plugin_${AVP_VERSION}_linux_amd64";
+              chmod +x /custom-tools/argocd-vault-plugin
+          env:
+            - name: AVP_VERSION
+              value: "1.18.1"
+          volumeMounts:
+            - name: custom-tools
+              mountPath: /custom-tools
+      containers:
+        - name: argocd-repo-server
+          volumeMounts:
+            - name: custom-tools
+              mountPath: /usr/local/bin
+            - name: avp-credentials
+              mountPath: /vault
+              readOnly: true
+          env:
+            - name: VAULT_ADDR
+              valueFrom:
+                secretKeyRef:
+                  name: argocd-vault-credentials
+                  key: VAULT_ADDR
+            - name: VAULT_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: argocd-vault-credentials
+                  key: VAULT_TOKEN
+            - name: AVP_TYPE
+              value: "vault"
+            - name: AVP_AUTH_TYPE
+              value: "token"
+            - name: AVP_KV_VERSION
+              value: "2"
