@@ -1,17 +1,18 @@
+# /Users/xsm/Documents/workspace/AWS/eks/projects/srotas/argocd/apps/networking/srotas-networking.yaml
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: srotas-networking
+  name: networking
   namespace: argocd
 spec:
   project: srotas
   source:
-    repoURL: <REPO_URL>
+    repoURL: git@github.com:xsmmaurya/eks.git
     targetRevision: main
     path: srotas/networking
   destination:
     server: https://kubernetes.default.svc
-    namespace: networking
+    namespace: apps
   syncPolicy:
     automated:
       prune: true

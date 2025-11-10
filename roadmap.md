@@ -155,7 +155,16 @@ ArgoCD	CodePipeline / ArgoCD on EKS
 GitHub repo	CodeCommit / GitHub Actions
 Helm / Kustomize	CloudFormation / CDK pipelines
 
-🧠 Phase 7 — Cloud Parity: From Minikube ➜ EKS
+
+🧩 Phase 7 — Extra Layers (Advanced)
+Layer	Tool	AWS Equivalent
+Service Mesh	Istio / Linkerd	App Mesh
+Policy	Kyverno / Gatekeeper	OPA / IAM conditions
+Event Autoscaling	KEDA	CloudWatch / Lambda triggers
+Secrets Sync	External Secrets Operator	Secrets Manager sync
+
+
+🧠 Phase 8 — Cloud Parity: From Minikube ➜ EKS
 Steps to migrate
 Push containers to ECR:
 
@@ -183,12 +192,6 @@ Move observability to CloudWatch.
 
 Point ArgoCD to EKS context.
 
-🧩 Phase 8 — Extra Layers (Advanced)
-Layer	Tool	AWS Equivalent
-Service Mesh	Istio / Linkerd	App Mesh
-Policy	Kyverno / Gatekeeper	OPA / IAM conditions
-Event Autoscaling	KEDA	CloudWatch / Lambda triggers
-Secrets Sync	External Secrets Operator	Secrets Manager sync
 
 💰 Phase 9 — Cost & Scaling Learnings
 Local concept	AWS concept	Key Learning

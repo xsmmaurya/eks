@@ -1,0 +1,8 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - peer-authentication-strict.yaml
+  - destinationrule-mtls.yaml
+  - authz-default-deny.yaml
+  - authz-allow-main-to-mcp.yaml
+  - authz-allow-fe-to-main.yaml

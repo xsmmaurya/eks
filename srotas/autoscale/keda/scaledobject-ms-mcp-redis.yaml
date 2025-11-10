@@ -1,0 +1,20 @@
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: srotas-ms-mcp-redis-scale
+  namespace: apps
+spec:
+  scaleTargetRef:
+    name: srotas-ms-mcp      # Deployment name in apps ns
+  pollingInterval: 5          # seconds between checks
+  cooldownPeriod: 60          # seconds to scale down after idling
+  minReplicaCount: 1
+  maxReplicaCount: 6
+  triggers:
+    - type: redis
+      metadata:
+        address: "redis://host.minikube.internal:6379"
+        listName: "mcp:jobs"
+        listLength: "50"              # scale up when > 50 pending
+      authenticationRef:
+        name: keda-redis-auth

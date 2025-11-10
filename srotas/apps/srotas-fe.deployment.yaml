@@ -7,6 +7,8 @@ metadata:
     app: srotas-fe
     tier: fe
     app.kubernetes.io/part-of: srotas
+    service: fe
+    owner: xsm
 spec:
   replicas: 1
   selector:
@@ -17,11 +19,13 @@ spec:
         app: srotas-fe
         tier: fe
         metrics: "true"
+        service: fe
+        owner: xsm
     spec:
-      serviceAccountName: sa-srotas-fe
+      serviceAccountName: srotas-fe-sa
       containers:
         - name: srotas-fe
-          image: xsmmaurya/srotas-fe:0.1.0
+          image: xsmmaurya/srotas-fe:latest
           imagePullPolicy: Always
           ports:
             - name: http

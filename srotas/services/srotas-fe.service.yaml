@@ -6,6 +6,8 @@ metadata:
   labels:
     app: srotas-fe
     app.kubernetes.io/part-of: srotas
+    service: fe
+    owner: xsm
 spec:
   selector:
     app: srotas-fe

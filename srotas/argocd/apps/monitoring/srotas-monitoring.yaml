@@ -1,12 +1,13 @@
+#/Users/xsm/Documents/workspace/AWS/eks/projects/srotas/argocd/apps/monitoring/srotas-monitoring.yaml
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: srotas-monitoring
+  name: monitoring
   namespace: argocd
 spec:
   project: srotas
   source:
-    repoURL: <REPO_URL>
+    repoURL: git@github.com:xsmmaurya/eks.git
     targetRevision: main
     path: srotas/monitoring
   destination:

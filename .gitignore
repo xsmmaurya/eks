@@ -1,0 +1,9 @@
+srotas/argocd/repo-credentials.yaml
+.DS_Store
+
+# ignore local secrets
+**/argocd/*secret.yaml
+**/*.key
+**/*.pem
+
+srotas/.secrets/*.yaml

@@ -1,0 +1,28 @@
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: readonly-rootfs
+spec:
+  validationFailureAction: Enforce
+  background: true
+  rules:
+    - name: enforce-readonly-rootfs
+      match:
+        any:
+          - resources:
+              kinds: ["Pod","Deployment","StatefulSet","Job","CronJob"]
+      validate:
+        message: "Root filesystem must be read-only (set srotas.space/allow-write-rootfs=true to bypass)."
+        anyPattern:
+          # 1) BYPASS PATH — if label is explicitly true, allow as-is
+          - metadata:
+              labels:
+                srotas.space/allow-write-rootfs: "true"
+          # 2) ENFORCEMENT PATH — otherwise require RO rootfs on all containers
+          - spec:
+              containers:
+                - securityContext:
+                    readOnlyRootFilesystem: true
+              =(initContainers):
+                - securityContext:
+                    readOnlyRootFilesystem: true

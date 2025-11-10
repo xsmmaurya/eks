@@ -1,0 +1,45 @@
+# image tags (avoid :latest)
+operator:
+  image:
+    repository: ghcr.io/kedacore/keda
+    tag: "2.14.0"
+  resources:
+    requests: { cpu: "100m", memory: "128Mi" }
+    limits:   { cpu: "500m", memory: "512Mi" }
+  securityContext:
+    runAsNonRoot: true
+    allowPrivilegeEscalation: false
+    readOnlyRootFilesystem: true
+    capabilities: { drop: ["ALL"] }
+  podSecurityContext:
+    seccompProfile: { type: RuntimeDefault }
+
+metricsServer:
+  image:
+    repository: ghcr.io/kedacore/keda-metrics-apiserver
+    tag: "2.14.0"
+  resources:
+    requests: { cpu: "100m", memory: "128Mi" }
+    limits:   { cpu: "500m", memory: "512Mi" }
+  securityContext:
+    runAsNonRoot: true
+    allowPrivilegeEscalation: false
+    readOnlyRootFilesystem: true
+    capabilities: { drop: ["ALL"] }
+  podSecurityContext:
+    seccompProfile: { type: RuntimeDefault }
+
+webhooks:
+  image:
+    repository: ghcr.io/kedacore/keda-admission-webhooks
+    tag: "2.14.0"
+  resources:
+    requests: { cpu: "50m", memory: "64Mi" }
+    limits:   { cpu: "200m", memory: "256Mi" }
+  securityContext:
+    runAsNonRoot: true
+    allowPrivilegeEscalation: false
+    readOnlyRootFilesystem: true
+    capabilities: { drop: ["ALL"] }
+  podSecurityContext:
+    seccompProfile: { type: RuntimeDefault }

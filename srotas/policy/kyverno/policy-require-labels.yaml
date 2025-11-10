@@ -1,0 +1,22 @@
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: require-srotas-labels
+spec:
+  validationFailureAction: Audit
+  background: true
+  rules:
+    - name: must-have-core-labels
+      match:
+        any:
+          - resources:
+              kinds: ["Pod","Deployment","StatefulSet","DaemonSet","Job","CronJob","Service"]
+              namespaces: ["apps"]
+      validate:
+        message: "Workloads in 'apps' must have labels: app, service, owner."
+        pattern:
+          metadata:
+            labels:
+              app: "?*"
+              service: "?*"
+              owner: "?*"

@@ -1,0 +1,31 @@
+# /Users/xsm/Documents/workspace/AWS/eks/projects/srotas/argocd/notifications/argocd-notifications-cm.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: argocd-notifications-cm
+  namespace: argocd
+data:
+  service.webhook.slack: |
+    url: $slack-webhook-url
+    headers:
+      - name: Content-Type
+        value: application/json
+
+  template.app-sync-status: |
+    webhook:
+      slack:
+        method: POST
+        body: |
+          {
+            "text": "*{{.app.metadata.name}}* sync: *{{.app.status.sync.status}}*, health: *{{.app.status.health.status}}*\n{{if .app.status.operationState}}Operation: *{{.app.status.operationState.phase}}*\n{{end}}{{.context.argocdUrl}}/applications/{{.app.metadata.name}}"
+          }
+
+  trigger.on-sync-change: |
+    - when: app.status.sync.status in ['OutOfSync', 'Synced']
+      send: [app-sync-status]
+
+  subscriptions: |
+    - recipients:
+        - webhook:slack
+      triggers:
+        - on-sync-change

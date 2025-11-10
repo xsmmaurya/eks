@@ -1,0 +1,16 @@
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+  name: allow-fe-to-main
+  namespace: apps
+spec:
+  selector:
+    matchLabels:
+      app: srotas-main
+  rules:
+    - from:
+        - source:
+            principals: ["cluster.local/ns/apps/sa/srotas-fe-sa"]
+      to:
+        - operation:
+            ports: ["8080"]

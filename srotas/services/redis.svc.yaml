@@ -1,8 +1,13 @@
+# /Users/xsm/Documents/workspace/AWS/eks/projects/srotas/services/redis.svc.yaml
 apiVersion: v1
 kind: Service
 metadata:
   name: redis
   namespace: apps
+  labels:
+    app: redis
+    service: cache
+    owner: xsm
 spec:
   type: ClusterIP
   selector:
@@ -10,3 +15,17 @@ spec:
   ports:
   - port: 6379
     targetPort: 6379
+
+---
+
+apiVersion: v1
+kind: Endpoints
+metadata:
+  name: redis
+  namespace: apps
+subsets:
+  - addresses:
+      - ip: 192.168.65.254
+    ports:
+      - name: tcp
+        port: 6379

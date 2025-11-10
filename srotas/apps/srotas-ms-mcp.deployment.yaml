@@ -7,6 +7,8 @@ metadata:
     app: srotas-ms-mcp
     tier: backend
     app.kubernetes.io/part-of: srotas
+    service: ms
+    owner: xsm
 spec:
   replicas: 2
   selector:
@@ -17,11 +19,13 @@ spec:
         app: srotas-ms-mcp
         tier: backend
         metrics: "true"
+        service: ms
+        owner: xsm
     spec:
-      serviceAccountName: sa-srotas-ms-mcp
+      serviceAccountName: srotas-ms-mcp-sa
       containers:
         - name: srotas-ms-mcp
-          image: xsmmaurya/srotas-ms-mcp:0.1.0
+          image: xsmmaurya/srotas-ms-mcp:latest
           imagePullPolicy: Always
           ports:
             - name: http

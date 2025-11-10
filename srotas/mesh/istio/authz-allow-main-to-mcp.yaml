@@ -1,0 +1,16 @@
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+  name: allow-main-to-mcp
+  namespace: apps
+spec:
+  selector:
+    matchLabels:
+      app: srotas-ms-mcp
+  rules:
+    - from:
+        - source:
+            principals: ["cluster.local/ns/apps/sa/srotas-main-sa"]
+      to:
+        - operation:
+            ports: ["8080"]
