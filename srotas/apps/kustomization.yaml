@@ -1,3 +1,17 @@
-# srotas/apps/kustomization.yaml
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+# All workloads will be deployed into this namespace
+namespace: apps
+
+# List all deployment manifests you want to include
+resources:
+  - srotas-fe.deployment.yaml
+  - srotas-main.deployment.yaml
+  - srotas-ms-mcp.deployment.yaml
+
+# Add consistent labels across all objects
 commonLabels:
+  app.kubernetes.io/managed-by: argocd
+  app.kubernetes.io/part-of: srotas
   owner: xsm

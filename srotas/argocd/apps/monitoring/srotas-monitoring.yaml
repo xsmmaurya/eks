@@ -1,15 +1,15 @@
-#/Users/xsm/Documents/workspace/AWS/eks/projects/srotas/argocd/apps/monitoring/srotas-monitoring.yaml
+# /Users/xsm/Documents/workspace/AWS/eks/projects/srotas/argocd/apps/monitoring/srotas-monitoring.yaml
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: monitoring
+  name: srotas-monitoring
   namespace: argocd
 spec:
-  project: srotas
+  project: default
   source:
-    repoURL: git@github.com:xsmmaurya/eks.git
+    repoURL: https://github.com/xsmmaurya/eks.git
     targetRevision: main
-    path: srotas/monitoring
+    path: srotas/monitoring           # <- adjust if your folder differs
   destination:
     server: https://kubernetes.default.svc
     namespace: monitoring
@@ -19,5 +19,11 @@ spec:
       selfHeal: true
     syncOptions:
       - CreateNamespace=true
-      - PruneLast=true
       - ApplyOutOfSyncOnly=true
+    retry:
+      limit: 2
+      backoff:
+        duration: 5s
+        factor: 2
+        maxDuration: 2m
+  revisionHistoryLimit: 3

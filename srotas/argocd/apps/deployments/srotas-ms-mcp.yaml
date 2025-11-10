@@ -1,9 +1,8 @@
-# argocd/apps/deployments/srotas-apps.yaml
-# All At Once
+# argocd/apps/deployments/srotas-ms-mcp.yaml
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: srotas-apps
+  name: srotas-ms-mcp
   namespace: argocd
 spec:
   project: default
@@ -11,6 +10,9 @@ spec:
     repoURL: https://github.com/xsmmaurya/eks.git
     targetRevision: main
     path: srotas/apps
+    directory:
+      recurse: false
+      include: srotas-ms-mcp.deployment.yaml
   destination:
     server: https://kubernetes.default.svc
     namespace: apps

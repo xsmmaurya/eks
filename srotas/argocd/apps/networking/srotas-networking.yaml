@@ -2,22 +2,28 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: networking
+  name: srotas-networking
   namespace: argocd
 spec:
-  project: srotas
+  project: default
   source:
-    repoURL: git@github.com:xsmmaurya/eks.git
+    repoURL: https://github.com/xsmmaurya/eks.git
     targetRevision: main
-    path: srotas/networking
+    path: srotas/networking          # <- adjust if your folder differs
   destination:
     server: https://kubernetes.default.svc
-    namespace: apps
+    namespace: networking
   syncPolicy:
     automated:
       prune: true
       selfHeal: true
     syncOptions:
       - CreateNamespace=true
-      - PruneLast=true
       - ApplyOutOfSyncOnly=true
+    retry:
+      limit: 2
+      backoff:
+        duration: 5s
+        factor: 2
+        maxDuration: 2m
+  revisionHistoryLimit: 3
